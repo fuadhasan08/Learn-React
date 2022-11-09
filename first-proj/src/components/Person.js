@@ -4,24 +4,23 @@ import '../styles/style.css'
 class Person extends Component {
   constructor(props) {
     super(props)
-    this.val = ''
   }
 
   render() {
-    if (this.props.children) this.val = `Extras: ${this.props.children}`
+    // if (this.props.children) this.val = `Extras: ${this.props.children}`
 
     return (
-      <div className='person'>
+      <div className='books' id={this.props.id}>
+        <h1 onClick={this.props.delete}>
+          Book: {this.props.name} <br /> Author: {this.props.age}
+          {/* <br /> */}
+          {/* {this.val} */}
+        </h1>
         <input
           type='text'
           defaultValue={this.props.name}
-          onChange={this.props.onInput}
+          onChange={this.props.inputChange}
         />
-        <h1 /*onClick={this.props.change}*/>
-          Name: {this.props.name} & Age: {this.props.age}
-          <br />
-          {this.val}
-        </h1>
       </div>
     )
   }

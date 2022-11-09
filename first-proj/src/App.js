@@ -6,61 +6,51 @@ import './App.css'
 class App extends Component {
   state = {
     books: [
-      { personName: 'Dipro', age: 20 },
-      { personName: 'Fuad', age: 21 },
-      { personName: 'Hasan', age: 20 },
+      { id: 1, bookName: 'Tomb of Sand', author: "Geetanjali Shree's" },
+      { id: 2, bookName: 'Lal Salam', author: 'Smriti Irani' },
+      { id: 3, bookName: 'Queen of Fire', author: 'Devika Rangachari' },
+      { id: 4, bookName: 'The Maverick Effect', author: 'Harish Mehta' },
     ],
-    extraInfo: 'A likklle adventure',
   }
 
-  btnClicked = (bookName) => {
-    this.setState({
-      books: [
-        { personName: bookName, age: 20 },
-        { personName: 'Downey', age: 21 },
-        { personName: 'JR', age: 20 },
-      ],
-      extraInfo: 'A likklle bit adventure',
-    })
+  chnageWithInput = (event, index) => {
+    let book = event.target.value
+
+    let books = [...this.state.books]
+
+    books[index].bookName = book
+
+    this.setState({ books: books })
   }
 
-  chnageWithInput = (event) => {
+  deleteElement = (index) => {
+    let books = [...this.state.books]
+    books.splice(index, 1)
     this.setState({
-      books: [
-        { personName: event.target.value, age: 20 },
-        { personName: 'Fuad', age: 21 },
-        { personName: 'Hasan', age: 20 },
-      ],
-      extraInfo: 'A likklle adventure',
+      books: books,
     })
   }
 
   render() {
+    let allElem = this.state.books.map((item, index) => {
+      return (
+        <Person
+          name={item.bookName}
+          age={item.author}
+          id={index}
+          delete={this.deleteElement.bind(this, index)}
+          key={item.id}
+          inputChange={(event) => this.chnageWithInput(event, index)}
+        ></Person>
+      )
+    })
+
     return (
       <div className='App'>
-        <button /*onClick={this.btnClicked.bind(this, 'Sutuni MJ')}*/>
+        {/* <button onClick={this.btnClicked.bind(this, 'Sutuni MJ')}>
           Click Me
-        </button>
-        <Person
-          name={this.state.books[0].personName}
-          age={this.state.books[0].age}
-          onInput={this.chnageWithInput}
-          // to pass arguments
-          /*change={this.btnClicked.bind(this, 'Sutuni MJ')}*/
-        >
-          {this.state.extraInfo}
-        </Person>
-        <Person
-          name={this.state.books[1].personName}
-          age={this.state.books[1].age}
-        ></Person>
-
-        <Person
-          name={this.state.books[2].personName}
-          age={this.state.books[2].age}
-          // to send this function to Person.js
-          /*change={this.btnClicked.bind(this, 'Sutuni MJ')}*/
-        ></Person>
+        </button> */}
+        {allElem}
       </div>
     )
   }
